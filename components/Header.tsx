@@ -1,5 +1,7 @@
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Header({
   photo,
@@ -8,6 +10,28 @@ export default function Header({
   photo?: string;
   email?: string;
 }) {
+  const router = useRouter()
+  const logout = async () => {
+    try {
+      const response = await fetch("/api/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        signOut();
+       
+        localStorage.removeItem("user"); // remove any user data from local storage
+        const baseUrl = window.location.origin;
+        window.location.href = baseUrl;
+      } else {
+        console.error("Error logging out:", response.status);
+      }
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
   return (
     <header className="flex flex-col xs:flex-row justify-between items-center w-full mt-3 border-b pb-7 sm:px-4 px-2 border-gray-500 gap-2">
       <Link href="/dream" className="flex space-x-2">
@@ -24,6 +48,12 @@ export default function Header({
       </Link>
       {email ? (
         <div className="flex items-center space-x-4">
+           <button
+           onClick={logout}
+            className="border-r border-gray-300 pr-4 flex space-x-2 hover:text-blue-400 transition"
+          >
+            <div>Logout</div>
+          </button>
           <Link
             href="/dashboard"
             className="border-r border-gray-300 pr-4 flex space-x-2 hover:text-blue-400 transition"

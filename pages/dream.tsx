@@ -59,7 +59,37 @@ const Home: NextPage = () => {
   const { data: session, status } = useSession();
  
 
+  useEffect(() => {
+    async function fetchData() {
+      if (session) {
+     let userLocal =   localStorage.getItem("user")
+     if(userLocal) {
+return
+     }
 
+
+        const response = await fetch("/api/googleLogin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: session?.user?.email }),
+        });
+  
+        if (response.ok) {
+          localStorage.setItem("user",JSON.stringify(session?.user))
+          router.push("/");
+          // the email was sent successfully
+       
+        } else {
+          // there was an error sending the email
+          console.error("Error sending magic login link");
+        }
+        console.log("Signed in as", session?.user);
+      }
+    }
+    fetchData();
+  }, [session]);
 
   const options = {
     maxFileCount: 1,
@@ -332,6 +362,7 @@ e.preventDefault()
                 </>
               ) : (
                 !originalPhoto && (
+                  <>
                   <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <label style={{ marginBottom: "10px", fontWeight: "bold", fontSize: "1.2rem" }}>
         Email:
@@ -340,6 +371,28 @@ e.preventDefault()
       </label>
       <button type="submit"  style={{ padding: "10px 20px", borderRadius: "5px", border: "none", backgroundColor: "#007bff", color: "#fff", fontSize: "1rem", cursor: "pointer" }}>Send Magic Link</button>
     </form>
+    <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px] mt-8">
+                    <div className="max-w-xl text-gray-300">
+                      Sign in below with Google to create a free account and
+                      redesign your room today. You will get 3 generations for
+                      free.
+                    </div>
+                    <button
+                      onClick={() => signIn("google")}
+                      className="bg-gray-200 text-black font-semibold py-3 px-6 rounded-2xl flex items-center space-x-2"
+                    >
+                      <Image
+                        src="/google.png"
+                        width={20}
+                        height={20}
+                        alt="google's logo"
+                      />
+                      <span>Sign in with Google</span>
+                    </button>
+                  </div>
+
+</>
+    
                   // <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px] -mt-8">
                   //   <div className="max-w-xl text-gray-300">
                   //     Sign in below with Google to create a free account and
