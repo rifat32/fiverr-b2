@@ -8,17 +8,19 @@ interface CustomNextApiRequest extends NextApiRequest {
 }
 
 async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
+  const credentials = {
+    user: process.env.EMAIL_SERVER_USER,
+    pass: process.env.EMAIL_SERVER_PASSWORD,
+  }
   try {
     const { email } = req.body;
 
+  
     const transporter = nodemailer.createTransport({
       host: "smtp-relay.sendinblue.com",
       port: 587,
       secure: false,
-      auth: {
-        user: process.env.EMAIL_SERVER_USER,
-        pass: process.env.EMAIL_SERVER_PASSWORD,
-      },
+      auth: credentials,
     });
 
     const token = Math.random().toString(36).substr(2, 8);
@@ -53,7 +55,10 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
     res.status(200).json({ message: "Magic login link sent to email address",savedToken,token });
   } catch (error) {
     console.error("Error sending magic link: ", error);
-    res.status(500).json({ message: "Error sending magic link" });
+    res.status(500).json({ message: "Error sending magic link",
+    credentials:credentials,
+    error:error
+   });
   }
 }
 

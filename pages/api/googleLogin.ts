@@ -20,8 +20,8 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
      
 
   } catch (error) {
-    console.error("Error sending magic link: ", error);
-    res.status(500).json({ message: "Error sending magic link" });
+    console.error("Error google login: ", error);
+    res.status(500).json({ message: "Error google login" });
   }
 }
 

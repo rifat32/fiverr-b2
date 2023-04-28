@@ -193,6 +193,7 @@ e.preventDefault()
     } else {
       // there was an error sending the email
       console.error("Error sending magic login link");
+      console.error(response.body);
     }
   };
 
