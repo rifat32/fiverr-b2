@@ -35,9 +35,9 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
     const appUrl = `${protocol}://${host}`;
 
     const info: SentMessageInfo = await transporter.sendMail({
-      from: "Your App Name <nyl9488.yln@gmail.com>",
+      from: `Your App Name <nyl9488.yln@gmail.com> ${Date.now}`,
       to: email,
-      subject: "Magic Login Link",
+      subject: `Magic Login Link ${Date.now}`,
       html: `
         <p>Hello!</p>
         <p>You recently requested a magic login link for Your App Name.</p>
