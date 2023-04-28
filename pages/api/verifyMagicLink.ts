@@ -17,7 +17,7 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
         req.session.set("user", JSON.stringify({email}));
         await req.session.save();
         res.redirect('/');
-        res.status(200).json({ message: "logged in successfully!",savedToken });
+       
       }
       else {
         res.status(401).json({ message: "invalid token",savedToken,token:token });
