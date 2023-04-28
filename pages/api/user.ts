@@ -20,11 +20,30 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
       return res.status(401).json("Login to upload.");
     }
  
-    const user = await prisma.user.findUnique({
+    let user = await prisma.user.findUnique({
       where: {
         email: userSession.email!,
       },
     });
+
+    if(!user) {
+      if(userSession.email) {
+        const userCreated = await prisma.user.create({
+          data: {
+            name:"Manually created User",
+            email:userSession.email,
+          
+          },
+        })
+
+       user = await prisma.user.findUnique({
+          where: {
+            email: userSession.email!,
+          },
+        });
+      }
+     
+  }
   
 
         res.status(200).json({ message: "ok",user:user });
