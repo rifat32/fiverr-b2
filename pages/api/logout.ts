@@ -12,7 +12,7 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
     res.status(200).json({ message: "ok" });
 
   } catch (error) {
-    console.error("Error sending magic link: ", error);
+    res.status(500).json({ message: "Error varify magic link",error });
     res.status(500).json({ message: "Error sending magic link" });
   }
 }
