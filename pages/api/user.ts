@@ -31,8 +31,8 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
       
 
   } catch (error) {
-    console.error("Error sending magic link: ", error);
-    res.status(500).json({ message: "Error varify magic link",error });
+    console.error("Error user: ", error);
+    res.status(500).json({ message: "Error varify magic link",error:JSON.stringify(error)  });
   }
 }
 

@@ -20,7 +20,7 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
        
       }
       else {
-        res.status(401).json({ message: "invalid token",savedToken,token:token });
+        res.status(200).json({ message: "invalid token",savedToken,token:token });
       }
 
   } catch (error) {
