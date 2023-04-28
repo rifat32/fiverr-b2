@@ -7,6 +7,7 @@ interface CustomNextApiRequest extends NextApiRequest {
 }
 
 async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
+  const data = []
   try {
     const { email,token } = req.query;
 
@@ -25,7 +26,7 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
         email: userSession.email!,
       },
     });
-
+    data.push({user})
     if(!user) {
       if(userSession.email) {
         const userCreated = await prisma.user.create({
@@ -35,12 +36,13 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
           
           },
         })
-
+        data.push(userCreated)
        user = await prisma.user.findUnique({
           where: {
             email: userSession.email!,
           },
         });
+        data.push({updatedUser:user})
       }
      
   }
@@ -51,7 +53,7 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
 
   } catch (error) {
     console.error("Error user: ", error);
-    res.status(500).json({ message: "Error varify magic link",error:JSON.stringify(error)  });
+    res.status(500).json({ message: "Error user",error:error, data  });
   }
 }
 
