@@ -52,8 +52,9 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
       
 
   } catch (error) {
+    data.push(error)
     console.error("Error user: ", error);
-    res.status(500).json({ message: "Error user",error:error, data  });
+    res.status(201).json({ message: "Error user",error:error, data  });
   }
 }
 
