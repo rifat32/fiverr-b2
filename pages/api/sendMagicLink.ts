@@ -16,8 +16,8 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
       port: 587,
       secure: false,
       auth: {
-        user: "rifatbilalphilips@gmail.com",
-        pass:"xsmtpsib-402c3b33a82bcdef9a5edc78d5ab720dc5c5715d09a7b0da3c5bd764dfb684c1-pJqVj9cG3XmwDrfb",
+        user: process.env.EMAIL_SERVER_USER,
+        pass: process.env.EMAIL_SERVER_PASSWORD,
       },
     });
 

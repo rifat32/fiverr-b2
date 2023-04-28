@@ -363,14 +363,24 @@ e.preventDefault()
               ) : (
                 !originalPhoto && (
                   <>
-                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <label style={{ marginBottom: "10px", fontWeight: "bold", fontSize: "1.2rem" }}>
-        Email:
-        <input type="email" value={emailNew} onChange={handleEmailChange} style={{ marginLeft: "10px", padding: "5px", borderRadius: "5px", border: "1px solid #ccc", fontSize: "1rem", color:"black" }} />
-    
-      </label>
-      <button type="submit"  style={{ padding: "10px 20px", borderRadius: "5px", border: "none", backgroundColor: "#007bff", color: "#fff", fontSize: "1rem", cursor: "pointer" }}>Send Magic Link</button>
-    </form>
+       <div style={{ backgroundColor: "#fff", padding: "20px", borderRadius: "10px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"  }}>
+  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <label style={{ marginBottom: "10px", fontWeight: "bold", fontSize: "1.2rem", display: "block",color:"black" }}>
+      Email:
+    </label>
+    <div style={{ marginBottom: "20px" }}>
+      <input type="email" value={emailNew} onChange={handleEmailChange} style={{ width: "100%", padding: "10px", borderRadius: "5px", border: "1px solid #ccc", fontSize: "1rem", color:"black" }} />
+    </div>
+    <button type="submit" style={{ display: "flex", alignItems: "center", padding: "10px 20px", borderRadius: "5px", border: "none", backgroundColor: "green", color: "#fff", fontSize: "1rem", cursor: "pointer" }}>
+      <span style={{ marginRight: "10px" }}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M10.354 8.146a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 0-.708L9.146 8l-3.5-3.5a.5.5 0 0 1 0-.708l.5-.5a.5.5 0 0 1 .708 0l3.5 3.5a.5.5 0 0 1 0 .708z"/>
+        </svg>
+      </span>
+      Send Magic Link
+    </button>
+  </form>
+</div>
     <div className="h-[250px] flex flex-col items-center space-y-6 max-w-[670px] mt-8">
                     <div className="max-w-xl text-gray-300">
                       Sign in below with Google to create a free account and
