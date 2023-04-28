@@ -10,9 +10,9 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
   const data = []
   try {
     const { email,token } = req.query;
-
+    data.push("user session getting")
     let userSession = req.session.get("user");
-
+    data.push("user session got")
     if(userSession) {
       userSession =  JSON.parse(userSession)
     }
@@ -20,7 +20,7 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
       console.log("User not logged in");
       return res.status(401).json("Login to upload.");
     }
- 
+    data.push("user retrieving")
     let user = await prisma.user.findUnique({
       where: {
         email: userSession.email!,
@@ -48,7 +48,7 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
   }
   
 
-        res.status(200).json({ message: "ok",user:user });
+        res.status(200).json({ message: "ok",user:user,data });
       
 
   } catch (error) {
