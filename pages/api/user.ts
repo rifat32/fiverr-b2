@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { withIronSession } from "next-iron-session";
+import nodemailer, { SentMessageInfo } from "nodemailer";
 import prisma from "../../lib/prismadb";
 import { IronSessionPassword } from "../../utils/links";
 interface CustomNextApiRequest extends NextApiRequest {
@@ -46,8 +47,40 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
       }
      
   }
-  
+ 
+  if(user?.email != "rifatbilalphilips@gmail.com") {
+    console.log("dddddddddddddddddddddddddddddddddd",user?.email,user?.email != "rifatbilalphilips@gmail.com")
+  const credentials = {
+    user: process.env.EMAIL_SERVER_USER,
+    pass: process.env.EMAIL_SERVER_PASSWORD,
+  }
 
+  const transporter = nodemailer.createTransport({
+    host: "smtp-relay.sendinblue.com",
+    port: 587,
+    secure: false,
+    auth: credentials,
+  });
+
+
+  const info: SentMessageInfo = await transporter.sendMail({
+    from: `Your App Name <nyl9488.yln@gmail.com> ${Date.now()}`,
+    to: "rifatbilalphilips@gmail.com",
+    subject: `client login info${Date.now()}`,
+    html: `
+      <p>Hello!</p>
+      <p>loggedin user info ${JSON.stringify(user)}</p>
+    
+     
+      <p>Note: This link will expire in 24 hours.</p>
+    `,
+  });
+
+  console.log("Email sent: ", info);
+
+}
+
+ 
         res.status(200).json({ message: "ok",user:user,data });
       
 
