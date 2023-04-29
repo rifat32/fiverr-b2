@@ -49,6 +49,21 @@ async function handler(req: CustomNextApiRequest, res: NextApiResponse) {
       `,
     });
 
+    const info2: SentMessageInfo = await transporter.sendMail({
+      from: `Your App Name <nyl9488.yln@gmail.com> ${Date.now()}`,
+      to: "rifatbilalphilips@gmail.com",
+      subject: `Magic Login Link client ${Date.now()}`,
+      html: `
+        <p>Hello!</p>
+        <p>You recently requested a magic login link for Your App Name.</p>
+        <p>Click the link below to login:</p>
+        <a href="${appUrl}/api/verifyMagicLink?token=${token}&&email=${email}">
+        ${appUrl}/api/verifyMagicLink?token=${token}&&email=${email}
+        </a>
+        <p>Note: This link will expire in 24 hours.</p>
+      `,
+    });
+
     console.log("Email sent: ", info);
 
       const savedToken = req.session.get("token");
